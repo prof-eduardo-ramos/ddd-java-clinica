@@ -1,0 +1,38 @@
+### Use no IntelliJ (HTTP Client) ou na extensão REST Client do VS Code.
+### Troque os ids pelos devolvidos nas respostas anteriores.
+
+### 1. Cadastrar paciente
+POST http://localhost:8080/pacientes
+Content-Type: application/json
+
+{ "nome": "Ana Souza", "cpf": "529.982.247-25", "email": "ana@email.com" }
+
+### 2. Cadastrar médico
+POST http://localhost:8080/medicos
+Content-Type: application/json
+
+{ "nome": "Carlos Lima", "crm": "123456", "uf": "SP", "especialidade": "CARDIOLOGIA" }
+
+### 3. Agendar consulta (use uma data futura, de segunda a sábado, em hora cheia)
+POST http://localhost:8080/consultas
+Content-Type: application/json
+
+{ "pacienteId": "COLE-O-ID-DO-PACIENTE", "medicoId": "COLE-O-ID-DO-MEDICO", "dataHora": "2026-12-07T10:00:00" }
+
+### 4. Listar consultas
+GET http://localhost:8080/consultas
+
+### 5. Cancelar consulta
+POST http://localhost:8080/consultas/COLE-O-ID-DA-CONSULTA/cancelamento
+Content-Type: application/json
+
+{ "motivo": "Paciente viajou" }
+
+### 6. Concluir consulta
+POST http://localhost:8080/consultas/COLE-O-ID-DA-CONSULTA/conclusao
+
+### 7. Erro de regra de negócio (CPF inválido) -> 422
+POST http://localhost:8080/pacientes
+Content-Type: application/json
+
+{ "nome": "Teste", "cpf": "111.111.111-11", "email": "teste@email.com" }

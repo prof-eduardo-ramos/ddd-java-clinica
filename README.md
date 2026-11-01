@@ -1,68 +1,32 @@
-# ddd-java-clinica
+# ddd-java-clinica · Atividade
 
-Projeto da live **"Diagramando e criando as classes com Java"** da disciplina *Domain Driven Design com Java* (Engenharia de Software, FIAP).
+Você está na branch **`lab/diagramando-classes-java`**: o ponto de partida do hands on da live **"Diagramando e criando as classes com Java"** (FIAP · DDD com Java).
 
-Partimos de uma **aplicação Java vazia** e criamos, passo a passo, as classes de domínio de uma **clínica de consultas médicas** a partir do diagrama de classes. Depois protegemos as **invariantes de negócio** nos construtores, criamos a **porta** e o **caso de uso**, o **adaptador em memória**, agendamos consultas pelo `main` e, por fim, expomos tudo como uma **API REST com Spring Boot**, sem alterar o domínio.
+Aqui está um projeto Java **recém-criado**: um `pom.xml` e a classe `Main` com o método `main` vazio. A partir dele, você vai construir o sistema da clínica passo a passo.
 
 ```bash
 git clone https://github.com/prof-eduardo-ramos/ddd-java-clinica.git
+cd ddd-java-clinica
+git checkout lab/diagramando-classes-java
 ```
 
-## Branches e tags
+## Roteiro
 
-| Referência | Conteúdo |
-|---|---|
-| `main` | Solução completa (Java puro + API Spring Boot) |
-| `lab/diagramando-classes-java` | **Ponto de partida da atividade**: projeto Java recém-criado, com o `main` vazio |
-| `passo-1` | Projeto Java do zero com o método `main` vazio |
-| `passo-2` | Classes de domínio do diagrama: só atributos, getters e setters |
-| `passo-3` | Invariantes de negócio nos construtores; classes movidas para `domain.model` |
-| `passo-4` | Porta `ConsultaRepository` (`domain.interfaces`) e caso de uso `ConsultaService` (`application.service`) |
-| `passo-5` | Adaptador em memória `ConsultaRepositoryEmMemoria` (`infrastructure.repository`) |
-| `passo-6` | `main` agendando consultas com toda a estrutura |
-| `passo-7` | API REST com Spring Boot (`presentation` e `infrastructure.config`) |
+| Passo | O que você vai fazer | Pacote |
+|---|---|---|
+| 1 | Projeto Java do zero com `main` vazio (já pronto nesta branch) | `br.com.fiap.clinica` |
+| 2 | Criar as classes do diagrama: atributos, getters e setters | `br.com.fiap.clinica` |
+| 3 | Proteger as invariantes de negócio nos construtores e mover as classes | `domain.model` |
+| 4 | Criar a porta `ConsultaRepository` e o caso de uso `ConsultaService` | `domain.interfaces`, `application.service` |
+| 5 | Implementar o adaptador em memória | `infrastructure.repository` |
+| 6 | Agendar consultas pelo `main` | `br.com.fiap.clinica` |
+| 7 | Expor a API REST com Spring Boot | `presentation`, `infrastructure.config` |
 
-## Como rodar
+Siga o **[passo a passo completo](docs/PASSO-A-PASSO.md)**: ele explica cada conceito de Java no momento em que aparece.
 
-Pré-requisitos: **JDK 21** e **Maven 3.9+** (o IntelliJ IDEA já traz o Maven embutido).
+## Material de apoio
 
-```bash
-mvn test                 # 38 testes
-mvn spring-boot:run      # API em http://localhost:8080
-```
-
-A classe `Main` continua rodando o agendamento em Java puro, sem Spring. Use o arquivo [`requests.http`](requests.http) para testar a API.
-
-## Documentação
-
-- [Passo a passo do hands on](docs/PASSO-A-PASSO.md)
 - [Linguagem ubíqua e regras de negócio](docs/linguagem-ubiqua.md)
 - [Diagrama de classes e camadas](docs/diagrama-de-classes.md)
 
-## Endpoints
-
-| Método | Caminho | Descrição |
-|---|---|---|
-| POST | `/consultas` | Agenda consulta |
-| GET | `/consultas`, `/consultas/{id}` | Lista / busca consultas |
-| POST | `/consultas/{id}/cancelamento` | Cancela (body: `{"motivo": "..."}`) |
-| POST | `/consultas/{id}/conclusao` | Conclui |
-
-## Estrutura
-
-```
-br.com.fiap.clinica
-├── Main                         Java puro: agendamento sem framework
-├── ClinicaApplication           Spring Boot: sobe a API
-├── domain
-│   ├── model                    Consulta, Paciente, Medico, Cpf, Email, Crm, enums, RegraDeNegocioException
-│   └── interfaces               ConsultaRepository (porta)
-├── application
-│   └── service                  ConsultaService (caso de uso)
-├── infrastructure
-│   ├── repository               ConsultaRepositoryEmMemoria (adaptador)
-│   └── config                   BeanConfig (Spring)
-└── presentation                 ConsultaController, DTOs e tratamento de erros
-```
-
-**Stack:** Java 21 · Maven · JUnit 6 · Spring Boot 4.1
+Travou? A solução está na branch `main`, e cada passo tem uma tag (`passo-1` a `passo-7`).

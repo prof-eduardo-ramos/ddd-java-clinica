@@ -1,0 +1,43 @@
+### Use no IntelliJ (HTTP Client) ou na extensão REST Client do VS Code.
+
+### 1. Agendar consulta (data futura, de segunda a sábado, em hora cheia)
+POST http://localhost:8080/consultas
+Content-Type: application/json
+
+{
+  "paciente": { "nome": "Ana Souza", "cpf": "529.982.247-25", "email": "ana@email.com" },
+  "medico": { "nome": "Carlos Lima", "crm": "123456", "uf": "SP", "especialidade": "CARDIOLOGIA" },
+  "dataHora": "2026-12-07T10:00:00"
+}
+
+### 2. Mesmo médico (mesmo CRM), mesmo horário -> 422 (regra 3)
+POST http://localhost:8080/consultas
+Content-Type: application/json
+
+{
+  "paciente": { "nome": "Bruno Alves", "cpf": "153.509.460-56", "email": "bruno@email.com" },
+  "medico": { "nome": "Carlos Lima", "crm": "123456", "uf": "SP", "especialidade": "CARDIOLOGIA" },
+  "dataHora": "2026-12-07T10:00:00"
+}
+
+### 3. CPF inválido -> 422 (invariante do record Cpf)
+POST http://localhost:8080/consultas
+Content-Type: application/json
+
+{
+  "paciente": { "nome": "Teste", "cpf": "111.111.111-11", "email": "teste@email.com" },
+  "medico": { "nome": "Carlos Lima", "crm": "123456", "uf": "SP", "especialidade": "CARDIOLOGIA" },
+  "dataHora": "2026-12-08T10:00:00"
+}
+
+### 4. Listar consultas
+GET http://localhost:8080/consultas
+
+### 5. Cancelar consulta (troque pelo id devolvido no passo 1)
+POST http://localhost:8080/consultas/COLE-O-ID-DA-CONSULTA/cancelamento
+Content-Type: application/json
+
+{ "motivo": "Paciente viajou" }
+
+### 6. Concluir consulta
+POST http://localhost:8080/consultas/COLE-O-ID-DA-CONSULTA/conclusao
